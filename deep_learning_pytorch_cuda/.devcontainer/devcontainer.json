@@ -1,10 +1,11 @@
 {
 	// For quick reference: https://containers.dev/implementors/json_reference/
+	// 1. Define the container name and build settings.
 	"name": "Deep Learning Dev - Pytorch with CUDA",
 	"build": {
-		"dockerfile": "Dockerfile",
-		"context": "."
+		"dockerfile": "Dockerfile"
 	},
+	// 2. Define the workspace mount point and default folder.
 	"workspaceMount": "source=${localWorkspaceFolder},target=/home/${localEnv:USER}/dev,type=bind",
 	"workspaceFolder": "/home/${localEnv:USER}/dev",
 	// 3. Use 'runArgs' to pass arguments to the container.
@@ -15,7 +16,7 @@
 		"--ulimit",
 		"core=-1",
 		"--gpus=all",
-		"--runtime=nvidia"	
+		"--runtime=nvidia"
 	],
 	// 4. Use 'remoteEnv' to set environment variables inside the container.
 	"remoteEnv": {
