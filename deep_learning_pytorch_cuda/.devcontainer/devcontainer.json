@@ -13,8 +13,6 @@
 		"--name",
 		"deep_learning_pytorch_cuda",
 		"--network=host",
-		"--ulimit",
-		"core=-1",
 		"--gpus=all",
 		"--runtime=nvidia"
 	],
@@ -29,7 +27,7 @@
 	// 5. Use 'mounts' to make a list of local directories available inside the container. More info: https://code.visualstudio.com/remote/advancedcontainers/add-local-file-mount
 	"mounts": [
 		// (Optional) Source code directory.
-		// "source=${localEnv:DEEP_LEARNING_SOURCE_PATH},target=/home/${localEnv:USER}/dev/source,type=bind",
+		"source=${localEnv:DEEP_LEARNING_SOURCE_PATH},target=/home/${localEnv:USER}/dev/source,type=bind",
 		// Support running GUIs inside the container.
 		"source=/tmp/.X11-unix/,target=/tmp/.X11-unix/,type=bind",
 		// Support accessing sockets (network, audio, D-bus) inside the container.
