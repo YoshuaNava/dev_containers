@@ -6,18 +6,22 @@
 		"dockerfile": "Dockerfile"
 	},
 	// 2. Define the workspace mount point and default folder.
-	"workspaceMount": "source=${localWorkspaceFolder},target=/home/${localEnv:USER}/dev,type=bind",
-	"workspaceFolder": "/home/${localEnv:USER}/dev",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/${localEnv:USER}/workspace,type=bind",
+	"workspaceFolder": "/home/${localEnv:USER}/workspace",
 	// 3. Use 'runArgs' to pass arguments to the container.
 	"runArgs": [
 		"--name",
 		"deep_learning_pytorch_cuda",
+		// Share the host's network with the container.
 		"--network=host",
+		// Allow GPU access.
 		"--gpus=all",
-		"--runtime=nvidia"
+		"--runtime=nvidia",
+		// Increase shared memory size to prevent well-known Pytorch & CUDA issues.
+		"--shm-size=2g"
 	],
-	// 4. Use 'remoteEnv' to set environment variables inside the container.
-	"remoteEnv": {
+	// 4. Use 'containerEnv' to set environment variables inside the container.
+	"containerEnv": {
 		"DISPLAY": "${localEnv:DISPLAY}",
 		"NVIDIA_VISIBLE_DEVICES": "all",
 		"NVIDIA_DRIVER_CAPABILITIES": "all"
@@ -25,18 +29,16 @@
 	// 5. Use 'mounts' to make a list of local directories available inside the container. More info: https://code.visualstudio.com/remote/advancedcontainers/add-local-file-mount
 	"mounts": [
 		// (Optional) Source code directory.
-		"source=${localEnv:DEEP_LEARNING_SOURCE_PATH},target=/home/${localEnv:USER}/dev/source,type=bind",
+		"source=${localEnv:DEEP_LEARNING_SOURCE_PATH},target=/home/${localEnv:USER}/workspace/source,type=bind",
 		// Support running GUIs inside the container.
 		"source=/tmp/.X11-unix/,target=/tmp/.X11-unix/,type=bind",
-		// Support accessing sockets (network, audio, D-bus) inside the container.
-		"source=/run/user/1000,target=/run/user/1000,type=bind",
-		// Share local time setting.
-		"source=/etc/localtime,target=/etc/localtime,type=bind"
+		// Share local time setting. (read-only)
+		"source=/etc/localtime,target=/etc/localtime,type=bind,ro"
 	],
 	// 6. Features to add to the Dev Container. More info: https://containers.dev/implementors/features
 	"features": {
 		// Create a non-root user to match the host user.
-		"ghcr.io/devcontainers/features/common-utils:2": {
+		"ghcr.io/workspacecontainers/features/common-utils:2": {
 			"installZsh": "true",
 			"configureZshAsDefaultShell": "true",
 			"installOhMyZsh": "true",
@@ -53,7 +55,9 @@
 		"ghcr.io/devcontainers/features/git:1": {
 			"version": "os-provided",
 			"ppa": "false"
-		}
+		},
+		// git lfs for large datasets
+		"ghcr.io/devcontainers/features/git-lfs:1": {}
 	},
 	// 7. Configure tool-specific properties for VS Code.
 	"customizations": {
