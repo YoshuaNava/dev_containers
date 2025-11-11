@@ -1,7 +1,7 @@
 {
 	// For quick reference: https://containers.dev/implementors/json_reference/
 	// 1. Define the container name and build settings.
-	"name": "Deep Learning Dev - Pytorch with CUDA",
+	"name": "Dev Container",
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
@@ -11,7 +11,7 @@
 	// 3. Use 'runArgs' to pass arguments to the container.
 	"runArgs": [
 		"--name",
-		"deep_learning_pytorch_cuda",
+		"dev_container",
 		// Share the host's network with the container.
 		"--network=host",
 		// Allow GPU access.
@@ -29,60 +29,71 @@
 	// 5. Use 'mounts' to make a list of local directories available inside the container. More info: https://code.visualstudio.com/remote/advancedcontainers/add-local-file-mount
 	"mounts": [
 		// (Optional) Source code directory.
-		"source=${localEnv:DEEP_LEARNING_SOURCE_PATH},target=/home/${localEnv:USER}/workspace/source,type=bind",
+		"source=${localEnv:SOURCE_PATH},target=/home/${localEnv:USER}/workspace/source,type=bind",
 		// Support running GUIs inside the container.
 		"source=/tmp/.X11-unix/,target=/tmp/.X11-unix/,type=bind",
 		// Share local time setting. (read-only)
 		"source=/etc/localtime,target=/etc/localtime,type=bind,ro"
 	],
 	// 6. Features to add to the Dev Container. More info: https://containers.dev/implementors/features
-	"features": {
-		// Create a non-root user to match the host user.
-		"ghcr.io/devcontainers/features/common-utils:2": {
-			"installZsh": "true",
-			"configureZshAsDefaultShell": "true",
-			"installOhMyZsh": "true",
-			"username": "${localEnv:USER}",
-			"userUid": "automatic",
-			"userGid": "automatic"
-		},
-		// git
-		"ghcr.io/devcontainers/features/git:1": {
-			"version": "os-provided",
-			"ppa": "false"
-		},
-		// git lfs for large datasets
-		"ghcr.io/devcontainers/features/git-lfs:1": {}
-	},
-	// 7. Configure tool-specific properties for VS Code.
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"github.copilot",
-				"GitHub.copilot-chat",
-				"ms-python.python",
-				"ms-python.black-formatter",
-				"ms-python.debugpy",
-				"ms-python.isort",
-				"ms-python.pylint",
-				"ms-python.vscode-pylance",
-				"ms-toolsai.jupyter",
-				"ms-toolsai.jupyter-keymap",
-				"ms-toolsai.jupyter-renderers",
-				"ms-toolsai.vscode-jupyter-cell-tags",
-				"ms-toolsai.vscode-jupyter-slideshow",
-				"ms-toolsai.tensorboard",
-				"charliermarsh.ruff",
-				"ms-azuretools.vscode-docker"
-			],
-			"settings": {
-				"editor.formatOnSave": true,
-				"python.formatting.provider": "black",
-				"python.analysis.typeCheckingMode": "basic"
-			}
-		}
-	},
+	// "features": {
+	// 	// Create a non-root user to match the host user.
+	// 	"ghcr.io/devcontainers/features/common-utils:2": {
+	// 		"installZsh": "true",
+	// 		"configureZshAsDefaultShell": "true",
+	// 		"installOhMyZsh": "true",
+	// 		"username": "${localEnv:USER}",
+	// 		"userUid": "automatic",
+	// 		"userGid": "automatic"
+	// 	},
+	// 	// git
+	// 	"ghcr.io/devcontainers/features/git:1": {
+	// 		"version": "os-provided",
+	// 		"ppa": "false"
+	// 	},
+	// 	// git lfs for large datasets
+	// 	// "ghcr.io/devcontainers/features/git-lfs:1": {}
+	// },
+	// // 7. Configure tool-specific properties for VS Code.
+	// "customizations": {
+	// 	"vscode": {
+	// 		"extensions": [
+	// 			// Copilot
+	// 			"github.copilot",
+	// 			"GitHub.copilot-chat",
+	// 			// C++
+	// 			"llvm-vs-code-extensions.vscode-clangd",
+	// 			"ms-vscode.cmake-tools",
+	// 			// Python
+	// 			"charliermarsh.ruff",
+	// 			"ms-python.python",
+	// 			"ms-python.black-formatter",
+	// 			"ms-python.debugpy",
+	// 			"ms-python.isort",
+	// 			"ms-python.pylint",
+	// 			"ms-python.vscode-pylance",
+	// 			"ms-toolsai.jupyter",
+	// 			"ms-toolsai.jupyter-keymap",
+	// 			"ms-toolsai.jupyter-renderers",
+	// 			"ms-toolsai.vscode-jupyter-cell-tags",
+	// 			"ms-toolsai.vscode-jupyter-slideshow",
+	// 			// TensorFlow
+	// 			"ms-toolsai.tensorboard",
+	// 			// Docker
+	// 			"ms-azuretools.vscode-docker"
+	// 		],
+	// 		"settings": {
+	// 			"editor.formatOnSave": true,
+	// 			"python.formatting.provider": "black",
+	// 			"python.analysis.typeCheckingMode": "basic"
+	// 		}
+	// 	}
+	// },
 	// 8. Use a non-root user for better security and file ownership
 	"containerUser": "${localEnv:USER}",
 	"remoteUser": "${localEnv:USER}"
+	// 9. Commands to run after the container is created
+	// "postCreateCommand": [
+	// 	".devcontainer/post/create_uv_environment.sh"
+	// ]
 }
