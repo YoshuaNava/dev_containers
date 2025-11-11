@@ -4,7 +4,7 @@
 ## DEV_CONTAINER_PATH
 
 start_dev_container() {
-    devcontainer up --config "$DEV_CONTAINER_PATH/.devcontainer/ros1/devcontainer.json" --workspace-folder "$DEV_CONTAINER_PATH"
+    devcontainer up --config "$DEV_CONTAINER_PATH/.devcontainer/devcontainer.json" --workspace-folder "$DEV_CONTAINER_PATH"
 }
 
 log_into_dev_container() {
