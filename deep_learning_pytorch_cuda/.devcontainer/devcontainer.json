@@ -61,9 +61,12 @@
 				// Copilot
 				"github.copilot",
 				"GitHub.copilot-chat",
+				// CMake
+				"ms-vscode.cmake-tools",
 				// C++
 				"llvm-vs-code-extensions.vscode-clangd",
-				"ms-vscode.cmake-tools",
+				"ms-vscode.cpptools",
+				"xaver.clang-format",
 				// Python
 				"charliermarsh.ruff",
 				"ms-python.python",

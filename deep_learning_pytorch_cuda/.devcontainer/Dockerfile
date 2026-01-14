@@ -27,7 +27,8 @@ RUN apt-get install -y \
     clang \
     clang-tidy \
     clang-format \
-    cmake
+    cmake \
+    libgtest-dev
 
 ## Python
 ### Black?
