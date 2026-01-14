@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $SOURCE_PATH
+cd "$SOURCE_PATH"
 
 uv --version
 uv venv .venv
