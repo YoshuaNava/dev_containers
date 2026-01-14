@@ -17,13 +17,13 @@ If you want to mount your source code
 
 .bashrc
 ```bash
-export DEEP_LEARNING_SOURCE_PATH="/home/<your_user>/source/"
+export SOURCE_PATH="/home/<your_user>/source/"
 ```
 
 devcontainer.json
 ```json
 "mounts": [
-	"source=${localEnv:DEEP_LEARNING_SOURCE_PATH},target=/home/${localEnv:USER}/dev/source,type=bind",
+	"source=${localEnv:SOURCE_PATH},target=/home/${localEnv:USER}/dev/source,type=bind",
     ...
 ```
 
